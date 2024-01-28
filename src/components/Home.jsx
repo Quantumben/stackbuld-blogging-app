@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import icon from "./assets/delete.png";
 
 const itemsPerPage = 4;
@@ -13,6 +13,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [successMessage, setSuccessMessage] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [userID, setUserID] = useState("");
   // const [updatePostData, setUpdatePostData] = useState("");
   const [updatePostData, setUpdatePostData] = useState({
     title: "",
@@ -61,6 +62,7 @@ const Home = () => {
 
   // Update User Function
   const updateUser = async (userId) => {
+    console.log("userID: ", userID)
     try {
       const response = await fetch(
         `https://dummyapi.io/data/v1/user/${userId}`,
@@ -316,11 +318,7 @@ const Home = () => {
             <button
               className="bg-[rgb(253,202,209)] p-3"
               onClick={() =>
-                updateUser({
-                  title: updatePostData.title,
-                  firstName: updatePostData.firstName,
-                  lastName: updatePostData.lastName,
-                })
+                updateUser(userID)
               }
             >
               Update
@@ -364,6 +362,7 @@ const Home = () => {
                       firstName: user.firstName,
                       lastName: user.lastName,
                     });
+                    setUserID(user.id)
                     handleUpdate();
                   }}
                 >
